@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doma 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin:0;
+  background:black;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+/* INTRO */
+#intro {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url("519ff7a73301beee251bef03b9d55cd9.jpg") center/cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:10;
+  transition:1s;
+}
+
+/* dark overlay */
+#intro::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+}
+
+/* text */
+#intro h1{
+  font-family:'Pacifico', cursive;
+  color:pink;
+  z-index:2;
+}
+
+/* button */
+button {
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  background:#ff4d6d;
+  color:white;
+  font-size:16px;
+  margin:10px;
+  z-index:2;
+  position:relative;
+}
+
+/* FADE OUT */
+.hide {
+  opacity:0;
+  transform:scale(1.2);
+}
+
+/* MESSAGE */
+#msg {
+  font-size:18px;
+  margin:20px;
+}
+
+/* GALLERY */
+.gallery img {
+  width:250px;
+  height:250px;
+  object-fit:cover;
+  border-radius:15px;
+  margin:10px;
+  box-shadow:0 0 20px pink;
+  transition:0.3s;
+}
+.gallery img:hover {
+  transform:scale(1.1);
+}
+
+/* GIFT POPUP */
+#gift {
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:white;
+  color:black;
+  padding:20px;
+  border-radius:15px;
+  width:90%;
+  max-height:80%;
+  overflow:auto;
+  transition:0.5s;
+}
+
+#gift.show{
+  display:block;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+/* HEARTS */
+.heart {
+  position:fixed;
+  bottom:0;
+  color:pink;
+  animation:float 5s linear infinite;
+}
+
+@keyframes float {
+  0% {transform:translateY(0);}
+  100% {transform:translateY(-100vh);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <h1>💖 I GOT SOMETHING FOR YOU 💖</h1>
+  <button onclick="start()">Open</button>
+</div>
+
+<!-- MAIN -->
+<h1>🎉 Happy Birthday Doma 🎂</h1>
+<p id="msg"></p>
+
+<!-- MUSIC -->
+<audio id="song" loop>
+  <source src="video_20260704_170652.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick="playMusic()">🎵 Play Music</button>
+
+<!-- IMAGES -->
+<div class="gallery">
+  <img src="b51d1f6ff137826a0d6448a3667198a3.jpg">
+  <img src="bc98b42a954d905a16b8fc26d089b37f.jpg">
+  <img src="f031e4e9e0bb5630c85b780814bb02be.jpg">
+</div>
+
+<!-- GIFT -->
+<button onclick="openGift()">🎁 Open Gift</button>
+
+<div id="gift">
+  <h2>💖 For You 💖</h2>
+  <p style="white-space:pre-line;">
+
+On your birthday, my love ❤️, I just want to say,
+You make my world brighter every single day ☀️✨.
+Like the sun in the morning, warm and true 🌅,
+All my happiness begins with you 💖.
+
+Your smile is magic 😊, your touch feels right 🤍,
+You’re my calm in chaos, my guiding light 🌟.
+In every moment, in all I do 💫,
+My heart keeps whispering only you 💕.
+
+Another year, another dream to share 🎂🎈,
+With you beside me, I’ve nothing to fear 🤗.
+Through every laugh 😂 and every tear 😢,
+I’ll love you more with every year 💞.
+
+So today I celebrate not just your birth 🎉,
+But the day that brought my joy to earth 🌍❤️.
+Forever yours, come what may 💍,
+Happy birthday, my love, today and always 💖🎊.
+
+  </p>
+  <button onclick="closeGift()">Close</button>
+</div>
+
+<script>
+
+// START
+function start(){
+  let intro = document.getElementById("intro");
+  intro.classList.add("hide");
+
+  document.getElementById("song").play().catch(()=>{});
+
+  setTimeout(()=>{
+    intro.style.display="none";
+  },1000);
+
+  typeText();
+  createHearts();
+}
+
+// TYPE TEXT
+function typeText(){
+  let text = "Happy Birthday Doma 💖 You make my world beautiful ✨";
+  let i = 0;
+
+  function typing(){
+    if(i < text.length){
+      document.getElementById("msg").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 40);
+    }
+  }
+  typing();
+}
+
+// MUSIC BUTTON
+function playMusic(){
+  document.getElementById("song").play();
+}
+
+// GIFT
+function openGift(){
+  document.getElementById("gift").classList.add("show");
+}
+
+function closeGift(){
+  document.getElementById("gift").classList.remove("show");
+}
+
+// HEARTS
+function createHearts(){
+  setInterval(()=>{
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random()*100 + "%";
+    heart.style.fontSize = (Math.random()*20+10)+"px";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{heart.remove();},5000);
+  },300);
+}
+
+</script>
+
+</body>
+</html>
