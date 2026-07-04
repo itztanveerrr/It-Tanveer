@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise 🎉</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: black;
+  overflow: hidden;
+  color: white;
+  text-align: center;
+}
+
+/* Background slideshow */
+.bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: slide 15s infinite;
+  z-index: -1;
+}
+
+@keyframes slide {
+  0% {background-image: url("b51d1f6ff137826a0d6448a3667198a3.jpg");}
+  33% {background-image: url("bc98b42a954d905a16b8fc26d089b37f.jpg");}
+  66% {background-image: url("f031e4e9e0bb5630c85b780814bb02be.jpg");}
+  100% {background-image: url("b51d1f6ff137826a0d6448a3667198a3.jpg");}
+}
+
+/* Gift box */
+.gift-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  background: red;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+
+.gift-box::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 30px;
+  background: gold;
+  top: 60px;
+}
+
+.gift-box::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 100%;
+  background: gold;
+  left: 60px;
+}
+
+/* Lid animation */
+.open {
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+/* Message box */
+.message {
+  display: none;
+  padding: 20px;
+  font-size: 18px;
+  animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: scale(0.8);}
+  to {opacity: 1; transform: scale(1);}
+}
+
+/* Glow text */
+h1 {
+  color: pink;
+  text-shadow: 0 0 20px pink;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<!-- Gift -->
+<div class="gift-box" onclick="openGift()"></div>
+
+<!-- Music -->
+<audio id="song" src="video_20260704_170652.mp4"></audio>
+
+<!-- Message -->
+<div class="message" id="message">
+<h1>🎉 Happy Birthday My Love 💖</h1>
+
+<p>
+On your birthday, my love ❤️, I just want to say,<br>
+You make my world brighter every single day ☀️✨.<br>
+Like the sun in the morning, warm and true 🌅,<br>
+All my happiness begins with you 💖.<br><br>
+
+Your smile is magic 😊, your touch feels right 🤍,<br>
+You’re my calm in chaos, my guiding light 🌟.<br>
+In every moment, in all I do 💫,<br>
+My heart keeps whispering only you 💕.<br><br>
+
+Another year, another dream to share 🎂🎈,<br>
+With you beside me, I’ve nothing to fear 🤗.<br>
+Through every laugh 😂 and every tear 😢,<br>
+I’ll love you more with every year 💞.<br><br>
+
+So today I celebrate not just your birth 🎉,<br>
+But the day that brought my joy to earth 🌍❤️.<br>
+Forever yours, come what may 💍,<br>
+Happy birthday, my love, today and always 💖🎊.
+</p>
+
+</div>
+
+<script>
+function openGift() {
+  const box = document.querySelector('.gift-box');
+  const msg = document.getElementById('message');
+  const song = document.getElementById('song');
+
+  // Animate gift
+  box.classList.add('open');
+
+  // Show message
+  setTimeout(() => {
+    msg.style.display = "block";
+  }, 500);
+
+  // Play music
+  song.play().catch(() => {
+    alert("Tap again to play music 🎵");
+  });
+}
+</script>
+
+</body>
+</html>
