@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doma 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  text-align:center;
+  font-family:Arial;
+  overflow-x:hidden;
+}
+
+/* INTRO BACKGROUND */
+#intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url("519ff7a73301beee251bef03b9d55cd9.jpg") center/cover;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:10;
+  transition:1s;
+}
+#intro::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+}
+
+/* ENVELOPE */
+.envelope{
+  position:relative;
+  width:260px;
+  height:180px;
+  background:#ff4d6d;
+  border-radius:12px;
+  box-shadow:0 0 30px rgba(255,77,109,0.7);
+  cursor:pointer;
+  z-index:2;
+  transition:0.4s;
+}
+
+/* flap */
+.flap{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#ff758f;
+  clip-path:polygon(0 0,100% 0,50% 50%);
+  transform-origin:top;
+  transition:0.8s;
+}
+
+/* letter */
+.letter{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:white;
+  color:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:10px;
+  transform:translateY(100%);
+  transition:0.8s;
+  border-radius:10px;
+  font-family:'Pacifico',cursive;
+}
+
+/* OPEN EFFECT */
+.open .flap{
+  transform:rotateX(180deg);
+}
+.open .letter{
+  transform:translateY(-10%);
+}
+
+/* FADE */
+.hide{
+  opacity:0;
+  transform:scale(1.3);
+}
+
+/* MAIN TEXT */
+#msg{
+  margin:20px;
+  font-size:18px;
+}
+
+/* GALLERY */
+.gallery img{
+  width:250px;
+  height:250px;
+  object-fit:cover;
+  border-radius:15px;
+  margin:10px;
+  box-shadow:0 0 20px pink;
+}
+
+/* GIFT */
+#gift{
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  background:white;
+  color:black;
+  padding:20px;
+  border-radius:15px;
+  width:90%;
+  max-height:80%;
+  overflow:auto;
+  transition:0.5s;
+}
+#gift.show{
+  display:block;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+/* FLOATING HEARTS */
+.heart{
+  position:fixed;
+  bottom:0;
+  color:pink;
+  animation:float 5s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-100vh);}
+}
+
+/* BURST HEARTS */
+.burst{
+  position:absolute;
+  color:pink;
+  animation:burst 1s ease-out forwards;
+}
+@keyframes burst{
+  0%{opacity:1; transform:scale(1);}
+  100%{opacity:0; transform:translateY(-150px) scale(2);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ENVELOPE INTRO -->
+<div id="intro" onclick="openEnvelope()">
+  <div class="envelope" id="env">
+    <div class="flap"></div>
+    <div class="letter">
+      I got something for you 💖
+    </div>
+  </div>
+</div>
+
+<h1>🎉 Happy Birthday Doma 🎂</h1>
+<p id="msg"></p>
+
+<audio id="song" loop>
+  <source src="video_20260704_170652.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick="playMusic()">🎵 Play Music</button>
+
+<div class="gallery">
+  <img src="b51d1f6ff137826a0d6448a3667198a3.jpg">
+  <img src="bc98b42a954d905a16b8fc26d089b37f.jpg">
+  <img src="f031e4e9e0bb5630c85b780814bb02be.jpg">
+</div>
+
+<button onclick="openGift()">🎁 Open Gift</button>
+
+<div id="gift">
+<h2>💖 For You 💖</h2>
+<p style="white-space:pre-line;">
+
+On your birthday, my love ❤️, I just want to say,
+You make my world brighter every single day ☀️✨.
+Like the sun in the morning, warm and true 🌅,
+All my happiness begins with you 💖.
+
+Your smile is magic 😊, your touch feels right 🤍,
+You’re my calm in chaos, my guiding light 🌟.
+In every moment, in all I do 💫,
+My heart keeps whispering only you 💕.
+
+Another year, another dream to share 🎂🎈,
+With you beside me, I’ve nothing to fear 🤗.
+Through every laugh 😂 and every tear 😢,
+I’ll love you more with every year 💞.
+
+So today I celebrate not just your birth 🎉,
+But the day that brought my joy to earth 🌍❤️.
+Forever yours, come what may 💍,
+Happy birthday, my love, today and always 💖🎊.
+
+</p>
+<button onclick="closeGift()">Close</button>
+</div>
+
+<script>
+
+// OPEN ENVELOPE
+function openEnvelope(){
+  let env = document.getElementById("env");
+  let intro = document.getElementById("intro");
+
+  env.classList.add("open");
+
+  // play music
+  document.getElementById("song").play().catch(()=>{});
+
+  burstHearts();
+
+  setTimeout(()=>{
+    intro.classList.add("hide");
+    setTimeout(()=>{intro.style.display="none";},800);
+
+    typeText();
+    createHearts();
+  },1000);
+}
+
+// BURST HEARTS
+function burstHearts(){
+  for(let i=0;i<20;i++){
+    let h=document.createElement("div");
+    h.className="burst";
+    h.innerHTML="💖";
+    h.style.left=(50+Math.random()*20-10)+"%";
+    h.style.top="50%";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),1000);
+  }
+}
+
+// TYPE TEXT
+function typeText(){
+  let text="Happy Birthday Doma 💖 You are my everything ✨";
+  let i=0;
+  function t(){
+    if(i<text.length){
+      document.getElementById("msg").innerHTML+=text[i];
+      i++;
+      setTimeout(t,40);
+    }
+  }
+  t();
+}
+
+// MUSIC
+function playMusic(){
+  document.getElementById("song").play();
+}
+
+// GIFT
+function openGift(){
+  document.getElementById("gift").classList.add("show");
+}
+function closeGift(){
+  document.getElementById("gift").classList.remove("show");
+}
+
+// FLOAT HEARTS
+function createHearts(){
+  setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"%";
+    h.style.fontSize=(Math.random()*20+10)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+  },300);
+}
+
+</script>
+
+</body>
+</html>
